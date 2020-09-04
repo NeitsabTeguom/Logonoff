@@ -1,0 +1,9 @@
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\Logonoff.exe
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\Logonoff.pdb
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Debug\Logonoff.csproj.CoreCompileInputs.cache
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Debug\Logonoff.exe
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Debug\Logonoff.pdb
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\Logonoff.exe.manifest
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\Logonoff.application
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Debug\Logonoff.exe.manifest
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Debug\Logonoff.application

@@ -1,0 +1,9 @@
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Release\Logonoff.exe.manifest
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Release\Logonoff.application
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Release\Logonoff.exe
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Release\Logonoff.pdb
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Release\Logonoff.exe.manifest
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Release\Logonoff.application
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Release\Logonoff.exe
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Release\Logonoff.pdb
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Release\Logonoff.csprojAssemblyReference.cache
