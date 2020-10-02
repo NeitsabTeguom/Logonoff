@@ -7,3 +7,7 @@ C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\Logonoff.exe.manifest
 C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\Logonoff.application
 C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Debug\Logonoff.exe.manifest
 C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Debug\Logonoff.application
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\config.json
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\Newtonsoft.Json.dll
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\Newtonsoft.Json.xml
+C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Debug\Logonoff.csproj.CopyComplete

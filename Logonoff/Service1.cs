@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,6 +47,29 @@ namespace Logonoff
             return username;
         }
 
+        private Config config;
+
+        private void LoadConfig()
+        {
+            string file = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "config.json");
+            if (File.Exists(file))
+            {
+                string content = File.ReadAllText(file);
+                try
+                {
+                    this.config = JsonConvert.DeserializeObject<Config>(content);
+                }
+                catch (Exception e)
+                {
+                    this.config = new Config();
+                }
+            }
+        }
+
+        private class Config
+        {
+            public Dictionary<string, string> locations { get; set; }
+        }
 
         public Service1()
         {
@@ -53,6 +77,7 @@ namespace Logonoff
             CanHandleSessionChangeEvent = true;
             ServiceName = "Logonoff";
             InitializeComponent();
+            this.LoadConfig();
         }
 
         protected override void OnStart(string[] args)
@@ -67,24 +92,7 @@ namespace Logonoff
         {
             string username = this.GetUsername(changeDescription.SessionId, false);
 
-            /*
-            EventLog.WriteEntry("SimpleService.OnSessionChange", DateTime.Now.ToLongTimeString() +
-                " - Session change notice received: " +
-                changeDescription.Reason.ToString() + 
-                "  Session ID: " + changeDescription.SessionId.ToString() + 
-                " Username: " + this.GetUsername(changeDescription.SessionId));
-                
-
-            switch (changeDescription.Reason)
-            {
-                case SessionChangeReason.SessionLogon:
-                    EventLog.WriteEntry("SimpleService.OnSessionChange: Logon");
-                    break;
-
-                case SessionChangeReason.SessionLogoff:
-                    EventLog.WriteEntry("SimpleService.OnSessionChange: Logoff");
-                    break;
-            }*/
+            string location = this.GetLocation();
 
             DateTime n = DateTime.Now;
 
@@ -92,7 +100,41 @@ namespace Logonoff
 
             string filename = "C:\\Users\\" + username.ToLower() + "\\" + username + "-" + n.ToString("yyyy") + "-" + num_semaine.ToString() + ".csv";
 
-            File.AppendAllText(filename, n.ToString("dd/MM/yyyy HH:mm:ss") + ";" + changeDescription.Reason.ToString() + ";\r\n");
+            File.AppendAllText(filename, $@"{n.ToString("dd/MM/yyyy HH:mm:ss")};{changeDescription.Reason.ToString()};{location};" + "\r\n");
         }
+
+        private string GetLocation()
+        {
+            string location = "";
+            try
+            {
+                string IP = this.GetPublicIp();
+                if (IP != null)
+                {
+                    location = IP; // A defaut
+                    if (this.config.locations.ContainsKey(IP))
+                    {
+                        location = this.config.locations[IP];
+                    }
+                }
+            }catch(Exception e) { }
+            return location;
+        }
+
+        private string GetPublicIp()
+        {
+            string serviceUrl = "https://ipinfo.io/ip";
+            string IP = null;
+            try
+            {
+                IP = new System.Net.WebClient().DownloadString(serviceUrl).Trim();
+            }
+            catch (Exception e)
+            {
+            }
+            return IP;
+        }
+
+
     }
 }
