@@ -11,3 +11,17 @@ C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\config.json
 C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\Newtonsoft.Json.dll
 C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\bin\Debug\Newtonsoft.Json.xml
 C:\PERSO\DEV\Logonoff\Logonoff\Logonoff\obj\Debug\Logonoff.csproj.CopyComplete
+D:\Perso\Dev\Logonoff\Logonoff\obj\Debug\Logonoff.csproj.CoreCompileInputs.cache
+D:\Perso\Dev\Logonoff\Logonoff\obj\Debug\Logonoff.exe
+D:\Perso\Dev\Logonoff\Logonoff\obj\Debug\Logonoff.pdb
+D:\Perso\Dev\Logonoff\Logonoff\bin\Debug\config.json
+D:\Perso\Dev\Logonoff\Logonoff\bin\Debug\Logonoff.exe.config
+D:\Perso\Dev\Logonoff\Logonoff\bin\Debug\Logonoff.exe.manifest
+D:\Perso\Dev\Logonoff\Logonoff\bin\Debug\Logonoff.application
+D:\Perso\Dev\Logonoff\Logonoff\bin\Debug\Logonoff.exe
+D:\Perso\Dev\Logonoff\Logonoff\bin\Debug\Logonoff.pdb
+D:\Perso\Dev\Logonoff\Logonoff\bin\Debug\Newtonsoft.Json.dll
+D:\Perso\Dev\Logonoff\Logonoff\obj\Debug\Logonoff.exe.manifest
+D:\Perso\Dev\Logonoff\Logonoff\obj\Debug\Logonoff.application
+D:\Perso\Dev\Logonoff\Logonoff\obj\Debug\Logonoff.csproj.CopyComplete
+D:\Perso\Dev\Logonoff\Logonoff\obj\Debug\Logonoff.csproj.AssemblyReference.cache

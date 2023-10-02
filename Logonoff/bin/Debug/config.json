@@ -1,5 +1,7 @@
 {
   "locations": {
-    "109.221.109.199": "Télétravail"
+    "10.7.24.1": "Présentiel",
+    "192.168.1.1": "Télétravail",
+    "192.168.43.1": "Télétravail 4G"
   }
 }

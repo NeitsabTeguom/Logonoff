@@ -1,0 +1,10 @@
+D:\Perso\Dev\Logonoff\LogonoffNotifier\bin\Debug\LogonoffNotifier.exe.config
+D:\Perso\Dev\Logonoff\LogonoffNotifier\bin\Debug\LogonoffNotifier.exe
+D:\Perso\Dev\Logonoff\LogonoffNotifier\bin\Debug\LogonoffNotifier.pdb
+D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Debug\LogonoffNotifier.Form1.resources
+D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Debug\LogonoffNotifier.Properties.Resources.resources
+D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Debug\LogonoffNotifier.csproj.GenerateResource.cache
+D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Debug\LogonoffNotifier.csproj.CoreCompileInputs.cache
+D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Debug\LogonoffNotifier.exe
+D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Debug\LogonoffNotifier.pdb
+D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Debug\LogonoffNotifier.csproj.AssemblyReference.cache
