@@ -7,3 +7,8 @@ D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Release\LogonoffNotifier.csproj.Gener
 D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Release\LogonoffNotifier.csproj.CoreCompileInputs.cache
 D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Release\LogonoffNotifier.exe
 D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Release\LogonoffNotifier.pdb
+D:\Perso\Dev\Logonoff\LogonoffNotifier\bin\Release\Microsoft.Toolkit.Uwp.Notifications.dll
+D:\Perso\Dev\Logonoff\LogonoffNotifier\bin\Release\System.ValueTuple.dll
+D:\Perso\Dev\Logonoff\LogonoffNotifier\bin\Release\Microsoft.Toolkit.Uwp.Notifications.pdb
+D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Release\LogonoffNotifier.csproj.CopyComplete
+D:\Perso\Dev\Logonoff\LogonoffNotifier\obj\Release\LogonoffNotifier.csproj.AssemblyReference.cache

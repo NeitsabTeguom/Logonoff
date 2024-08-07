@@ -107,7 +107,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>sc stop Logonoff</PreBuildEvent>
+    <PreBuildEvent>sc stop Logonoff | echo.</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>sc start Logonoff</PostBuildEvent>

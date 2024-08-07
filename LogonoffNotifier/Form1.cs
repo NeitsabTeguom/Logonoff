@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +21,29 @@ namespace LogonoffNotifier
 
         //private double DayTime = 7.5 * 60 * 60;
         private double DayTime = 8.25 * 60 * 60;
+        private double LastDayTime = 4 * 60 * 60;
+
+        private double dayOfWeekTime
+        {
+            get
+            {
+                double _dayOfWeekTime = dayOfWeek < 5 ? dayOfWeek * DayTime : (4 * DayTime) + LastDayTime;
+
+                return _dayOfWeekTime;
+            }
+        }
+
+        private double dayOfWeek
+        {
+            get
+            {
+                DateTime now = DateTime.Now;
+
+                return (((int)now.DayOfWeek + 6) % 7) + 1;
+            }
+        }
+
+
         private double TotalWeekTime = 5 * 7.5 * 60 * 60;
 
         public enum SessionChangeReason
@@ -83,6 +107,8 @@ namespace LogonoffNotifier
 
         private List<Activity> activities;
 
+        private bool dayEndToast = false;
+
         public Form1()
         {
             InitializeComponent();
@@ -99,7 +125,11 @@ namespace LogonoffNotifier
 
         private void ShowWeekHours()
         {
-            listBox1.Items.Clear();
+            try
+            {
+                listBox1.Items.Clear();
+            }
+            catch { }
 
             this.LoadCsv();
 
@@ -129,7 +159,7 @@ namespace LogonoffNotifier
                 if (startDT != null && (activity.reason == SessionChangeReason.SessionLogoff || activity.reason == SessionChangeReason.SessionLock))
                 {
                     if (startDT != null)
-                    {
+                    {/*
                         WeekTime += activity.moment.Subtract((DateTime)startDT).TotalSeconds;
 
                         if (((DateTime)startDT).ToString("dd/MM/yyyy") != now.ToString("dd/MM/yyyy"))
@@ -140,7 +170,7 @@ namespace LogonoffNotifier
                         if (((DateTime)startDT).ToString("dd/MM/yyyy") == now.ToString("dd/MM/yyyy"))
                         {
                             TodayTime += activity.moment.Subtract((DateTime)startDT).TotalSeconds;
-                        }
+                        }*/
 
                         startDT = null;
                     }
@@ -160,6 +190,11 @@ namespace LogonoffNotifier
                                 TotalSecondsToString(((DateTime)dayPause).TimeOfDay.TotalSeconds) + " / " +
                                 TotalSecondsToString(((DateTime)dayResume).TimeOfDay.TotalSeconds) + " - " +
                                 TotalSecondsToString(((DateTime)dayEnd).TimeOfDay.TotalSeconds));
+
+                            WeekTime += dayCount;
+
+
+                            CompleteWeekTime += dayCount;
                         }
                     }
 
@@ -172,50 +207,108 @@ namespace LogonoffNotifier
                 }
                 else
                 {
-                    if (dayPause == null && dayResume == null && activity.moment.TimeOfDay >= new TimeSpan(11, 45, 00) && (activity.reason == SessionChangeReason.SessionLogoff || activity.reason == SessionChangeReason.SessionLock))
-                    {
-                        dayPause = activity.moment;
-                    }
 
                     if (dayResume == null && activity.moment.TimeOfDay >= new TimeSpan(12, 30, 00) && (activity.reason == SessionChangeReason.SessionLogon || activity.reason == SessionChangeReason.SessionUnlock))
                     {
                         dayResume = activity.moment;
                     }
 
+                    if (dayResume == null && activity.moment.TimeOfDay >= new TimeSpan(11, 45, 00) && (activity.reason == SessionChangeReason.SessionLogoff || activity.reason == SessionChangeReason.SessionLock))
+                    {
+                        dayPause = activity.moment;
+                    }
+
                     if (dayResume != null && (activity.reason == SessionChangeReason.SessionLogoff || activity.reason == SessionChangeReason.SessionLock || activity.reason == SessionChangeReason.ConsoleDisconnect))
                     {
-                        dayEnd = activity.moment;
+                        if(currentDay != now.ToString("dd/MM/yyyy"))
+                        {
+                            dayEnd = activity.moment;
+                        }
                     }
                 }
             }
 
             if (dayBegin != null && dayPause != null && dayResume != null && dayEnd != null)
             {
+                if (((DateTime)dayEnd).ToString("dd/MM/yyyy") == now.ToString("dd/MM/yyyy"))
+                {
+                    dayEnd = now;
+                }
+
                 double dayCount = ((DateTime)dayPause).Subtract(((DateTime)dayBegin)).TotalSeconds + ((DateTime)dayEnd).Subtract(((DateTime)dayResume)).TotalSeconds;
                 listBox1.Items.Add(currentDay + " : " + TotalSecondsToString(dayCount) + " => " +
                     TotalSecondsToString(((DateTime)dayBegin).TimeOfDay.TotalSeconds) + " - " +
                     TotalSecondsToString(((DateTime)dayPause).TimeOfDay.TotalSeconds) + " / " +
                     TotalSecondsToString(((DateTime)dayResume).TimeOfDay.TotalSeconds) + " - " +
                     TotalSecondsToString(((DateTime)dayEnd).TimeOfDay.TotalSeconds));
-            }
 
+                WeekTime += dayCount;
+
+                if (((DateTime)dayBegin).ToString("dd/MM/yyyy") == now.ToString("dd/MM/yyyy"))
+                {
+                    TodayTime += dayCount;
+                }
+            }
+            else if (dayBegin != null && dayPause != null && dayResume != null)
+            {
+                double dayCount = ((DateTime)dayPause).Subtract(((DateTime)dayBegin)).TotalSeconds + DateTime.Now.Subtract(((DateTime)dayResume)).TotalSeconds;
+                listBox1.Items.Add(currentDay + " : " + TotalSecondsToString(dayCount) + " => " +
+                    TotalSecondsToString(((DateTime)dayBegin).TimeOfDay.TotalSeconds) + " - " +
+                    TotalSecondsToString(((DateTime)dayPause).TimeOfDay.TotalSeconds) + " / " +
+                    TotalSecondsToString(((DateTime)dayResume).TimeOfDay.TotalSeconds) + " - ...");
+
+                WeekTime += dayCount;
+
+                if (((DateTime)dayBegin).ToString("dd/MM/yyyy") == now.ToString("dd/MM/yyyy"))
+                {
+                    TodayTime += dayCount;
+                }
+            }
+            else if (dayBegin != null && dayPause != null)
+            {
+                if (((DateTime)dayPause).ToString("dd/MM/yyyy") == now.ToString("dd/MM/yyyy"))
+                {
+                    dayPause = now;
+                }
+
+                double dayCount = ((DateTime)dayPause).Subtract(((DateTime)dayBegin)).TotalSeconds;
+                listBox1.Items.Add(currentDay + " : " + TotalSecondsToString(dayCount) + " => " +
+                    TotalSecondsToString(((DateTime)dayBegin).TimeOfDay.TotalSeconds) + " - " +
+                    TotalSecondsToString(((DateTime)dayPause).TimeOfDay.TotalSeconds));
+
+                WeekTime += dayCount;
+
+                if (((DateTime)dayBegin).ToString("dd/MM/yyyy") == now.ToString("dd/MM/yyyy"))
+                {
+                    TodayTime += dayCount;
+                }
+            }
+            else if (dayBegin != null)
+            {
+                double dayCount = DateTime.Now.Subtract(((DateTime)dayBegin)).TotalSeconds;
+                listBox1.Items.Add(currentDay + " : " + TotalSecondsToString(dayCount) + " => " +
+                    TotalSecondsToString(((DateTime)dayBegin).TimeOfDay.TotalSeconds) + " ...");
+
+                WeekTime += dayCount;
+
+                if (((DateTime)dayBegin).ToString("dd/MM/yyyy") == now.ToString("dd/MM/yyyy"))
+                {
+                    TodayTime += dayCount;
+                }
+            }
+            /*
             if (startDT != null && ((DateTime)startDT).ToString("dd/MM/yyyy") == now.ToString("dd/MM/yyyy"))
             {
                 WeekTime += now.Subtract((DateTime)startDT).TotalSeconds;
                 TodayTime += now.Subtract((DateTime)startDT).TotalSeconds;
                 startDT = null;
-            }
+            }*/
 
             this.label1.Text = $@"Vous avez travaillé {TotalSecondsToString(WeekTime)} cette semaine !";
 
             this.label2.Text = $@"Vous avez travaillé {TotalSecondsToString(TodayTime)} aujourd'hui !";
 
-
             // Calcul de l'heure de sortie pour finir correctement le nombre d'heures de la semaine
-
-            int dayOfWeek = (((int)now.DayOfWeek + 6) % 7) + 1;
-
-            double dayOfWeekTime = dayOfWeek * DayTime;
 
             double toDoToday = dayOfWeekTime - WeekTime;
 
@@ -224,12 +317,34 @@ namespace LogonoffNotifier
             if (toDoToday > 0)
             {
                 this.label3.Text = $@"Reste à travailler {TotalSecondsToString(toDoToday)} aujourd'hui pour respecter le taux horaire hebdomadaire !";
-                this.label4.Text = $@"Il faut finir à {now.AddSeconds(toDoToday).ToString(@"HH:mm:ss")} aujourd'hui pour respecter le taux horaire hebdomadaire !";
+                DateTime todayStop = now.AddSeconds(toDoToday);
+                if(dayResume == null)
+                {
+                    todayStop = todayStop.AddHours(1);
+                }/*
+                else if (dayPause != null && dayResume == null)
+                {
+                    todayStop = todayStop.AddSeconds(DateTime.Now.Subtract(((DateTime)dayPause)).TotalSeconds);
+                }*/
+                this.label4.Text = $@"Il faut finir à {todayStop.ToString(@"HH:mm:ss")} aujourd'hui pour respecter le taux horaire hebdomadaire !";
 
                 this.label5.Text = $@"{TotalSecondsToString(CompleteWeekTime - ((dayOfWeek - 1) * DayTime))} supplémentaire estimé cette semaine.";
             }
             else
             {
+                
+                if(!dayEndToast)
+                {
+                    // Requires Microsoft.Toolkit.Uwp.Notifications NuGet package version 7.0 or greater
+                    new ToastContentBuilder()
+                        .AddArgument("action", "viewConversation")
+                        .AddArgument("conversationId", 9813)
+                        .AddText("LogOnOff")
+                        .AddText("Terminé pour aujourd'hui !")
+                        .Show(); // Not seeing the Show() method? Make sure you have version 7.0, and if you're using .NET 6 (or later), then your TFM must be net6.0-windows10.0.17763.0 or greater
+                    dayEndToast = true;
+                }
+
                 this.label3.Text = $@"{TotalSecondsToString(toDoToday * -1)} supplémentaires cette semaine !";
                 this.label4.Text = $@"Vous auriez du finir à {now.AddSeconds(toDoToday).ToString(@"HH:mm:ss")} aujourd'hui pour respecter le taux horaire hebdomadaire !";
 
@@ -270,6 +385,8 @@ namespace LogonoffNotifier
             showForm = false;
             this.Visible = showForm;
             e.Cancel = true;
+
+            ToastNotificationManagerCompat.History.Clear();
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)

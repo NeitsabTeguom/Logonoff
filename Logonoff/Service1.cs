@@ -99,6 +99,12 @@ namespace Logonoff
             public Dictionary<string, string> locations { get; set; }
         }
 
+        private class LogOnOff
+        {
+            public DateTime moment { get; set; }
+            public string reason { get; set; }
+        }
+
         public Service1()
         {
             CanPauseAndContinue = true;
@@ -119,7 +125,7 @@ namespace Logonoff
 
             DateTime n = DateTime.Now;
 
-            File.AppendAllText(this.GetCurrentFile(), $@"{n.ToString("dd/MM/yyyy HH:mm:ss")};Stop;{location};" + "\r\n");
+            this.Save(n, "Stop", location);
             */
         }
 
@@ -133,8 +139,98 @@ namespace Logonoff
 
                 DateTime n = DateTime.Now;
 
-                File.AppendAllText(this.GetCurrentFile(), $@"{n.ToString("dd/MM/yyyy HH:mm:ss")};{changeDescription.Reason.ToString()};{location};" + "\r\n");
+                this.Save(n, changeDescription.Reason, location);
             }
+        }
+
+        private void Save(DateTime dt, SessionChangeReason reason, string location)
+        {
+            string file = this.GetCurrentFile();
+
+            /*
+            string fileJSON = file + ".json";
+
+            if (File.Exists(fileJSON))
+            {
+                try
+                {
+                    string _reason = "";
+
+                    switch(reason)
+                    {
+                        case SessionChangeReason.ConsoleConnect:
+                            {
+                                _reason = "IN";
+                                break;
+                            }
+                        case SessionChangeReason.ConsoleDisconnect:
+                            {
+                                _reason = "OUT";
+                                break;
+                            }
+                        case SessionChangeReason.RemoteConnect:
+                            {
+                                _reason = "IN";
+                                break;
+                            }
+                        case SessionChangeReason.RemoteDisconnect:
+                            {
+                                _reason = "OUT";
+                                break;
+                            }
+                        case SessionChangeReason.SessionLock:
+                            {
+                                _reason = "OUT";
+                                break;
+                            }
+                        case SessionChangeReason.SessionUnlock:
+                            {
+                                _reason = "IN";
+                                break;
+                            }
+                        case SessionChangeReason.SessionLogon:
+                            {
+                                _reason = "IN";
+                                break;
+                            }
+                        case SessionChangeReason.SessionLogoff:
+                            {
+                                _reason = "OUT";
+                                break;
+                            }
+                    }
+
+                    Dictionary<string, LogOnOff> data = JsonConvert.DeserializeObject<Dictionary<string, LogOnOff>>(File.ReadAllText(fileJSON));
+
+                    string day = dt.ToString("dd/MM/yyyy");
+
+                    LogOnOff loo = data.First((el) => el.Key == day && el.Value.reason == _reason).Value;
+                    if(loo == null)
+                    {
+                        data.Add(day, new LogOnOff() { moment = dt, reason = _reason });
+                    }
+                    else
+                    {
+                        if (_reason == "OUT" && dt.TimeOfDay <= new TimeSpan(13, 0, 0))
+                        {
+                            loo.moment = dt;
+                        }
+
+                        if (_reason == "IN" && dt.TimeOfDay <= new TimeSpan(13, 0, 0))
+                        {
+                            loo.moment = dt;
+                        }
+                    }
+                    
+                    File.AppendAllText(fileJSON, JsonConvert.SerializeObject(data));
+                }
+                catch (Exception e)
+                {
+                }
+            }*/
+
+            File.AppendAllText(file + ".csv", $@"{dt.ToString("dd/MM/yyyy HH:mm:ss")};{reason.ToString()};{location};" + "\r\n");
+
         }
 
         private string GetCurrentFile()
@@ -144,7 +240,7 @@ namespace Logonoff
             int num_semaine = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(n, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
 
             return Path.Combine(@"C:\Users\", this.LoggedUsername.ToLower()) + "\\" +
-                this.LoggedUsername + "-" + n.ToString("yyyy") + "-" + num_semaine.ToString() + ".csv";
+                this.LoggedUsername + "-" + n.ToString("yyyy") + "-" + num_semaine.ToString();
         }
 
         private string GetLocation()

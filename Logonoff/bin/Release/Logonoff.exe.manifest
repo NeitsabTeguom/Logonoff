@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Logonoff.exe" size="10752">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Logonoff.exe" size="11264">
       <assemblyIdentity name="Logonoff" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0AKsu3X+1ywFt/NyHnPdanzyEcnq0QUoKRVk6MF45Gc=</dsig:DigestValue>
+        <dsig:DigestValue>zT1Gs+qIQAja+4bPsqIwem0yiP0T0jKKb++b6TNecTA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
