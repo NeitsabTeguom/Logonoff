@@ -235,12 +235,20 @@ namespace Logonoff
 
         private string GetCurrentFile()
         {
+
             DateTime n = DateTime.Now;
 
             int num_semaine = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(n, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
 
+            string year = n.ToString("yyyy");
+
+            if (num_semaine > 52)
+            {
+                year = (int.Parse(year) - 1).ToString();
+            }
+
             return Path.Combine(@"C:\Users\", this.LoggedUsername.ToLower()) + "\\" +
-                this.LoggedUsername + "-" + n.ToString("yyyy") + "-" + num_semaine.ToString();
+                this.LoggedUsername + "-" + year + "-" + num_semaine.ToString();
         }
 
         private string GetLocation()

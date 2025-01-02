@@ -367,8 +367,15 @@ namespace LogonoffNotifier
 
             int num_semaine = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(n, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
 
+            string year = n.ToString("yyyy");
+
+            if (num_semaine > 52)
+            {
+                year = (int.Parse(year) - 1).ToString();
+            }
+
             return Path.Combine(Path.GetDirectoryName(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)), Environment.UserName.ToLower()) + "\\" +
-                Environment.UserName + "-" + n.ToString("yyyy") + "-" + num_semaine.ToString() + ".csv";
+                Environment.UserName + "-" + year + "-" + num_semaine.ToString() + ".csv";
         }
 
         private string TotalSecondsToString(double totalSecondes)
